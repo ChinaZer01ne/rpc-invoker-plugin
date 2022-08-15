@@ -3,12 +3,12 @@ package com.github.peach.rpc;
  * @author Zer01ne
  * @since 2022/6/18 17:55
  */
-public class RpcInvoker {
+public interface RpcInvoker {
 
-    private RpcContext context;
-
-    public RpcResponse invoker(RpcRequest request) {
-        System.out.println("rpc request send...");
-        return new RpcResponse();
-    }
+    /**
+     * rpc执行策略
+     * @param context :
+     * @return com.github.peach.rpc.RpcResponse
+     */
+    RpcResponse invoker(RpcContext context);
 }

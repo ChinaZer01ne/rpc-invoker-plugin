@@ -49,6 +49,8 @@ tasks {
 
 dependencies{
 //  implementation("org.projectlombok:lombok:1.18.24")
-  implementation("org.apache.curator:curator-recipes:5.3.0")
+  implementation("org.apache.curator:curator-recipes:5.3.0") {
+    exclude(group = "org.slf4j", module = "slf4j-api")
+  }
 
 }

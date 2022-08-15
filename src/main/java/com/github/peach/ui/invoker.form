@@ -2,7 +2,7 @@
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="com.github.peach.ui.RpcInvokerForm">
   <scrollpane id="91754" binding="mainScrollPanel">
     <constraints>
-      <xy x="25" y="20" width="730" height="603"/>
+      <xy x="25" y="20" width="941" height="631"/>
     </constraints>
     <properties>
       <focusCycleRoot value="false"/>
@@ -14,7 +14,7 @@
     </properties>
     <border type="none"/>
     <children>
-      <grid id="27dc6" binding="mainPanel" layout-manager="GridLayoutManager" row-count="7" column-count="7" same-size-horizontally="false" same-size-vertically="false" hgap="5" vgap="-1">
+      <grid id="27dc6" binding="mainPanel" layout-manager="GridLayoutManager" row-count="7" column-count="10" same-size-horizontally="false" same-size-vertically="false" hgap="5" vgap="-1">
         <margin top="5" left="5" bottom="5" right="5"/>
         <constraints/>
         <properties>
@@ -44,16 +44,6 @@
               <text value="application"/>
             </properties>
           </component>
-          <component id="df64b" class="javax.swing.JTextField" binding="interfaceName">
-            <constraints>
-              <grid row="2" column="1" row-span="1" col-span="6" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                <preferred-size width="150" height="-1"/>
-              </grid>
-            </constraints>
-            <properties>
-              <text value=""/>
-            </properties>
-          </component>
           <component id="1b9be" class="javax.swing.JLabel" binding="interfaceLabel">
             <constraints>
               <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
@@ -62,28 +52,12 @@
               <text value="interface"/>
             </properties>
           </component>
-          <component id="f9b6b" class="javax.swing.JTextField" binding="method">
-            <constraints>
-              <grid row="3" column="1" row-span="1" col-span="6" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                <preferred-size width="150" height="-1"/>
-              </grid>
-            </constraints>
-            <properties/>
-          </component>
           <component id="d0cdf" class="javax.swing.JLabel" binding="methodLabel">
             <constraints>
               <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <text value="method"/>
-            </properties>
-          </component>
-          <component id="a7795" class="javax.swing.JTextField" binding="application">
-            <constraints>
-              <grid row="0" column="1" row-span="1" col-span="4" vsize-policy="0" hsize-policy="2" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <editable value="true"/>
             </properties>
           </component>
           <component id="c0186" class="javax.swing.JLabel" binding="hostLabel">
@@ -102,38 +76,9 @@
               <text value="send"/>
             </properties>
           </component>
-          <component id="df29d" class="javax.swing.JComboBox" binding="hostAddress">
-            <constraints>
-              <grid row="1" column="1" row-span="1" col-span="5" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                <preferred-size width="150" height="-1"/>
-              </grid>
-            </constraints>
-            <properties/>
-          </component>
-          <component id="1dcfc" class="javax.swing.JButton" binding="refresh">
-            <constraints>
-              <grid row="1" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <text value="refresh"/>
-            </properties>
-          </component>
-          <component id="f64f" class="javax.swing.JComboBox" binding="env">
-            <constraints>
-              <grid row="0" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <model>
-                <item value="fat"/>
-                <item value="uat"/>
-                <item value="pre"/>
-                <item value="pro"/>
-              </model>
-            </properties>
-          </component>
           <component id="3d909" class="javax.swing.JButton" binding="miniJsonRequestButton">
             <constraints>
-              <grid row="5" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="5" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <text value="miniJson"/>
@@ -141,7 +86,7 @@
           </component>
           <component id="191c" class="javax.swing.JButton" binding="prettyJsonRequestButton">
             <constraints>
-              <grid row="5" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="5" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <text value="prettyJson"/>
@@ -157,56 +102,173 @@
           </component>
           <component id="68b5e" class="javax.swing.JLabel" binding="responseLabel">
             <constraints>
-              <grid row="5" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="5" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <text value="response"/>
             </properties>
           </component>
+          <component id="6385f" class="javax.swing.JTextArea" binding="response">
+            <constraints>
+              <grid row="6" column="4" row-span="1" col-span="5" vsize-policy="0" hsize-policy="0" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                <minimum-size width="350" height="500"/>
+                <preferred-size width="350" height="500"/>
+              </grid>
+            </constraints>
+            <properties>
+              <dragEnabled value="false"/>
+              <enabled value="true"/>
+              <inheritsPopupMenu value="false"/>
+              <lineWrap value="false"/>
+              <text value=""/>
+              <wrapStyleWord value="false"/>
+            </properties>
+          </component>
+          <component id="86529" class="javax.swing.JTextArea" binding="request">
+            <constraints>
+              <grid row="6" column="0" row-span="1" col-span="4" vsize-policy="0" hsize-policy="0" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                <minimum-size width="350" height="500"/>
+                <preferred-size width="350" height="500"/>
+              </grid>
+            </constraints>
+            <properties>
+              <lineWrap value="true"/>
+              <text value=""/>
+              <wrapStyleWord value="true"/>
+            </properties>
+          </component>
+          <component id="541df" class="javax.swing.JComboBox" binding="paramFormat">
+            <constraints>
+              <grid row="5" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <model>
+                <item value="JSON"/>
+                <item value="XML"/>
+              </model>
+            </properties>
+          </component>
+          <component id="a7795" class="javax.swing.JTextField" binding="application">
+            <constraints>
+              <grid row="0" column="1" row-span="1" col-span="6" vsize-policy="0" hsize-policy="0" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <editable value="true"/>
+            </properties>
+          </component>
+          <component id="df29d" class="javax.swing.JComboBox" binding="hostAddress">
+            <constraints>
+              <grid row="1" column="1" row-span="1" col-span="7" vsize-policy="0" hsize-policy="0" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="150" height="-1"/>
+              </grid>
+            </constraints>
+            <properties/>
+          </component>
+          <component id="df64b" class="javax.swing.JTextField" binding="interfaceName">
+            <constraints>
+              <grid row="2" column="1" row-span="1" col-span="8" vsize-policy="0" hsize-policy="0" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="150" height="-1"/>
+              </grid>
+            </constraints>
+            <properties>
+              <text value=""/>
+            </properties>
+          </component>
+          <component id="f9b6b" class="javax.swing.JTextField" binding="method">
+            <constraints>
+              <grid row="3" column="1" row-span="1" col-span="8" vsize-policy="0" hsize-policy="0" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="150" height="-1"/>
+              </grid>
+            </constraints>
+            <properties/>
+          </component>
+          <hspacer id="18b8f">
+            <constraints>
+              <grid row="0" column="9" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+          </hspacer>
+          <hspacer id="21cff">
+            <constraints>
+              <grid row="1" column="9" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+          </hspacer>
+          <hspacer id="8d35f">
+            <constraints>
+              <grid row="2" column="9" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+          </hspacer>
+          <hspacer id="8764f">
+            <constraints>
+              <grid row="3" column="9" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+          </hspacer>
+          <hspacer id="57b8a">
+            <constraints>
+              <grid row="4" column="1" row-span="1" col-span="9" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+          </hspacer>
+          <hspacer id="6098e">
+            <constraints>
+              <grid row="5" column="9" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+          </hspacer>
+          <hspacer id="d7aa5">
+            <constraints>
+              <grid row="6" column="9" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+          </hspacer>
           <component id="4e0eb" class="javax.swing.JButton" binding="prettyJsonResponseButton">
             <constraints>
-              <grid row="5" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="5" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <text value="prettyJson"/>
             </properties>
           </component>
+          <hspacer id="a84e">
+            <constraints>
+              <grid row="5" column="7" row-span="1" col-span="2" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+          </hspacer>
+          <component id="3f0d0" class="javax.swing.JButton" binding="miniJsonResponseButton">
+            <constraints>
+              <grid row="5" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="miniJson"/>
+            </properties>
+          </component>
+          <component id="f64f" class="javax.swing.JComboBox" binding="env">
+            <constraints>
+              <grid row="0" column="8" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false">
+                <preferred-size width="128" height="38"/>
+              </grid>
+            </constraints>
+            <properties>
+              <model>
+                <item value="fat"/>
+                <item value="uat"/>
+                <item value="pre"/>
+                <item value="pro"/>
+              </model>
+            </properties>
+          </component>
           <component id="ee5fe" class="javax.swing.JLabel" binding="envLabel">
             <constraints>
-              <grid row="0" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="0" column="7" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <text value="env"/>
             </properties>
           </component>
-          <component id="6385f" class="javax.swing.JTextArea" binding="response">
+          <component id="1dcfc" class="javax.swing.JButton" binding="refresh">
             <constraints>
-              <grid row="6" column="3" row-span="1" col-span="4" vsize-policy="0" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                <minimum-size width="350" height="500"/>
-                <preferred-size width="350" height="500"/>
+              <grid row="1" column="8" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false">
+                <preferred-size width="128" height="38"/>
               </grid>
             </constraints>
             <properties>
-              <text value=""/>
-            </properties>
-          </component>
-          <component id="86529" class="javax.swing.JTextArea" binding="request">
-            <constraints>
-              <grid row="6" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                <minimum-size width="350" height="500"/>
-                <preferred-size width="350" height="500"/>
-              </grid>
-            </constraints>
-            <properties>
-              <text value=""/>
-            </properties>
-          </component>
-          <component id="3f0d0" class="javax.swing.JButton" binding="miniJsonResponseButton">
-            <constraints>
-              <grid row="5" column="5" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <text value="miniJson"/>
+              <text value="refresh"/>
             </properties>
           </component>
         </children>

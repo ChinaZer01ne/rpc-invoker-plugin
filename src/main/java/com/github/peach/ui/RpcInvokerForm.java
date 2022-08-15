@@ -1,19 +1,20 @@
 package com.github.peach.ui;
 
+import com.github.peach.rpc.impl.DefaultRpcInvoker;
 import com.github.peach.rpc.RpcContext;
-import com.github.peach.rpc.RpcInvoker;
 import com.github.peach.rpc.RpcRequest;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.ui.ComboBox;
+import com.github.peach.rpc.RpcResponse;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
+import com.intellij.uiDesigner.core.Spacer;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.swing.*;
-import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * 插件UI实体
@@ -49,7 +50,7 @@ public class RpcInvokerForm {
     /**
      * 主机地址标签
      */
-    private JComboBox hostAddress;
+    private JComboBox<String> hostAddress;
     /**
      * 接口名标签
      */
@@ -114,6 +115,10 @@ public class RpcInvokerForm {
      * 响应内容
      */
     private JTextArea response;
+    /**
+     * 请求格式
+     */
+    private JComboBox<String> paramFormat;
 
 
     public RpcInvokerForm() {
@@ -125,14 +130,16 @@ public class RpcInvokerForm {
         send.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                RpcContext rpcContext = new RpcContext();
                 RpcRequest rpcRequest = new RpcRequest();
-                rpcRequest.setHostName(hostAddress.getModel().getSelectedItem().toString());
+                rpcRequest.setHostName(Optional.ofNullable(hostAddress.getModel().getSelectedItem()).orElse(StringUtils.EMPTY).toString());
                 rpcRequest.setTag("");
                 rpcRequest.setClassName(interfaceName.getText());
                 rpcRequest.setMethod(method.getText());
                 rpcRequest.setParam(request.getText());
-                System.out.println(rpcRequest);
-                new RpcInvoker().invoker(rpcRequest);
+                rpcContext.setRpcRequest(rpcRequest);
+                RpcResponse rpcResponse = new DefaultRpcInvoker().invoker(rpcContext);
+                response.setText(rpcResponse.toString());
             }
         });
         refresh.addMouseListener(new MouseAdapter() {
@@ -204,7 +211,7 @@ public class RpcInvokerForm {
         mainScrollPanel.setPreferredSize(new Dimension(730, 362));
         mainScrollPanel.setVisible(true);
         mainPanel = new JPanel();
-        mainPanel.setLayout(new GridLayoutManager(7, 7, new Insets(5, 5, 5, 5), 5, -1));
+        mainPanel.setLayout(new GridLayoutManager(7, 10, new Insets(5, 5, 5, 5), 5, -1));
         mainPanel.setAutoscrolls(false);
         mainPanel.setEnabled(true);
         mainPanel.setFocusTraversalPolicyProvider(false);
@@ -220,66 +227,95 @@ public class RpcInvokerForm {
         applicationLabel.setHorizontalAlignment(10);
         applicationLabel.setText("application");
         mainPanel.add(applicationLabel, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        interfaceName = new JTextField();
-        interfaceName.setText("");
-        mainPanel.add(interfaceName, new GridConstraints(2, 1, 1, 6, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         interfaceLabel = new JLabel();
         interfaceLabel.setText("interface");
         mainPanel.add(interfaceLabel, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        method = new JTextField();
-        mainPanel.add(method, new GridConstraints(3, 1, 1, 6, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         methodLabel = new JLabel();
         methodLabel.setText("method");
         mainPanel.add(methodLabel, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        application = new JTextField();
-        application.setEditable(true);
-        mainPanel.add(application, new GridConstraints(0, 1, 1, 4, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         hostLabel = new JLabel();
         hostLabel.setText("ip:port:tag");
         mainPanel.add(hostLabel, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         send = new JButton();
         send.setText("send");
         mainPanel.add(send, new GridConstraints(4, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        hostAddress = new JComboBox();
-        mainPanel.add(hostAddress, new GridConstraints(1, 1, 1, 5, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
-        refresh = new JButton();
-        refresh.setText("refresh");
-        mainPanel.add(refresh, new GridConstraints(1, 6, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        env = new JComboBox();
-        final DefaultComboBoxModel defaultComboBoxModel1 = new DefaultComboBoxModel();
-        defaultComboBoxModel1.addElement("fat");
-        defaultComboBoxModel1.addElement("uat");
-        defaultComboBoxModel1.addElement("pre");
-        defaultComboBoxModel1.addElement("pro");
-        env.setModel(defaultComboBoxModel1);
-        mainPanel.add(env, new GridConstraints(0, 6, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         miniJsonRequestButton = new JButton();
         miniJsonRequestButton.setText("miniJson");
-        mainPanel.add(miniJsonRequestButton, new GridConstraints(5, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        mainPanel.add(miniJsonRequestButton, new GridConstraints(5, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         prettyJsonRequestButton = new JButton();
         prettyJsonRequestButton.setText("prettyJson");
-        mainPanel.add(prettyJsonRequestButton, new GridConstraints(5, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        mainPanel.add(prettyJsonRequestButton, new GridConstraints(5, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         requestLabel = new JLabel();
         requestLabel.setText("request");
         mainPanel.add(requestLabel, new GridConstraints(5, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         responseLabel = new JLabel();
         responseLabel.setText("response");
-        mainPanel.add(responseLabel, new GridConstraints(5, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        mainPanel.add(responseLabel, new GridConstraints(5, 4, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        response = new JTextArea();
+        response.setDragEnabled(false);
+        response.setEnabled(true);
+        response.setInheritsPopupMenu(false);
+        response.setLineWrap(false);
+        response.setText("");
+        response.setWrapStyleWord(false);
+        mainPanel.add(response, new GridConstraints(6, 4, 1, 5, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, new Dimension(350, 500), new Dimension(350, 500), null, 0, false));
+        request = new JTextArea();
+        request.setLineWrap(true);
+        request.setText("");
+        request.setWrapStyleWord(true);
+        mainPanel.add(request, new GridConstraints(6, 0, 1, 4, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, new Dimension(350, 500), new Dimension(350, 500), null, 0, false));
+        paramFormat = new JComboBox();
+        final DefaultComboBoxModel defaultComboBoxModel1 = new DefaultComboBoxModel();
+        defaultComboBoxModel1.addElement("JSON");
+        defaultComboBoxModel1.addElement("XML");
+        paramFormat.setModel(defaultComboBoxModel1);
+        mainPanel.add(paramFormat, new GridConstraints(5, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        application = new JTextField();
+        application.setEditable(true);
+        mainPanel.add(application, new GridConstraints(0, 1, 1, 6, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        hostAddress = new JComboBox();
+        mainPanel.add(hostAddress, new GridConstraints(1, 1, 1, 7, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        interfaceName = new JTextField();
+        interfaceName.setText("");
+        mainPanel.add(interfaceName, new GridConstraints(2, 1, 1, 8, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        method = new JTextField();
+        mainPanel.add(method, new GridConstraints(3, 1, 1, 8, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        final Spacer spacer1 = new Spacer();
+        mainPanel.add(spacer1, new GridConstraints(0, 9, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
+        final Spacer spacer2 = new Spacer();
+        mainPanel.add(spacer2, new GridConstraints(1, 9, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
+        final Spacer spacer3 = new Spacer();
+        mainPanel.add(spacer3, new GridConstraints(2, 9, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
+        final Spacer spacer4 = new Spacer();
+        mainPanel.add(spacer4, new GridConstraints(3, 9, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
+        final Spacer spacer5 = new Spacer();
+        mainPanel.add(spacer5, new GridConstraints(4, 1, 1, 9, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
+        final Spacer spacer6 = new Spacer();
+        mainPanel.add(spacer6, new GridConstraints(5, 9, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
+        final Spacer spacer7 = new Spacer();
+        mainPanel.add(spacer7, new GridConstraints(6, 9, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
         prettyJsonResponseButton = new JButton();
         prettyJsonResponseButton.setText("prettyJson");
-        mainPanel.add(prettyJsonResponseButton, new GridConstraints(5, 4, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        envLabel = new JLabel();
-        envLabel.setText("env");
-        mainPanel.add(envLabel, new GridConstraints(0, 5, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        response = new JTextArea();
-        response.setText("");
-        mainPanel.add(response, new GridConstraints(6, 3, 1, 4, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, new Dimension(350, 500), new Dimension(350, 500), null, 0, false));
-        request = new JTextArea();
-        request.setText("");
-        mainPanel.add(request, new GridConstraints(6, 0, 1, 3, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, new Dimension(350, 500), new Dimension(350, 500), null, 0, false));
+        mainPanel.add(prettyJsonResponseButton, new GridConstraints(5, 5, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final Spacer spacer8 = new Spacer();
+        mainPanel.add(spacer8, new GridConstraints(5, 7, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
         miniJsonResponseButton = new JButton();
         miniJsonResponseButton.setText("miniJson");
-        mainPanel.add(miniJsonResponseButton, new GridConstraints(5, 5, 1, 2, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        mainPanel.add(miniJsonResponseButton, new GridConstraints(5, 6, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        env = new JComboBox();
+        final DefaultComboBoxModel defaultComboBoxModel2 = new DefaultComboBoxModel();
+        defaultComboBoxModel2.addElement("fat");
+        defaultComboBoxModel2.addElement("uat");
+        defaultComboBoxModel2.addElement("pre");
+        defaultComboBoxModel2.addElement("pro");
+        env.setModel(defaultComboBoxModel2);
+        mainPanel.add(env, new GridConstraints(0, 8, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(128, 38), null, 0, false));
+        envLabel = new JLabel();
+        envLabel.setText("env");
+        mainPanel.add(envLabel, new GridConstraints(0, 7, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        refresh = new JButton();
+        refresh.setText("refresh");
+        mainPanel.add(refresh, new GridConstraints(1, 8, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(128, 38), null, 0, false));
     }
 
     /**
